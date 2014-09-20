@@ -4,39 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Predictor
+namespace TechnicalNet
 {
-    public class Neural : IPredictor
+    public class Neural
     {
-        private int m_GameCount = 0;
-        private int m_PlayerCount = 0;
-
-        private double[][] WhoPlayed;
-        private double[] Results;
-
-        private double[] GetWhoPlayed(int gameNum)
-        {
-            return WhoPlayed[gameNum];
-        }
-
-        private double GetGameResult(int gameNum)
-        {
-            return Results[gameNum];
-        }
-
         private BackPropNeuralNet m_Bnn;
-        private Player[] m_Players;
+        private Random rnd = new Random();
 
-        public void Configure(IEnumerable<Game> games, IEnumerable<Player> players)
+        public void Configure()
         {
-            m_Players = players.ToArray();
-            m_GameCount = games.Count();
-            m_PlayerCount = m_Players.Length;
-
-            Random rnd = new Random();
-            BuildGameData(games.ToArray(), m_Players);
-
-            int numInput = m_PlayerCount;
+            int numInput = 7;
             int numHidden = 6;
             int numOutput = 1;
             int numWeights = (numInput * numHidden) + (numHidden * numOutput) + (numHidden + numOutput);
@@ -72,17 +49,15 @@ namespace Predictor
 
             while (epoch < maxEpochs) // train
             {
-                int gameNum = rnd.Next(m_GameCount);  //leave 10 games for prediction
-                double[] whoPlayed = GetWhoPlayed(gameNum);
-                double result = GetGameResult(gameNum);
-                double[] predictedResult = m_Bnn.ComputeOutputs(whoPlayed);
+                double result = 0d; // GetGameResult(gameNum);
+                double[] predictedResult = m_Bnn.ComputeOutputs(new double[2]);
 
                 m_Bnn.UpdateWeights(new[] { result }, learnRate, momentum);
                 ++epoch;
 
                 if (epoch % 20000 == 0)
                 {
-                    error = GetTotalError(m_Bnn, true);
+                    error = 0d; // GetTotalError(m_Bnn, true);
 
                     if (error < errorThresh)
                     {
@@ -100,82 +75,14 @@ namespace Predictor
             //Helpers.ShowVector(finalWeights, 5, 8, true);
         }
 
-        private void BuildGameData(Game[] games, Player[] players)
+
+        public double Predict()
         {
-            m_PlayerCount = players.Count();
-            Results = new double[games.Count()];
-            WhoPlayed = new double[games.Count()][];
-
-            for (int i = 0; i < games.Count(); i++)
-            {
-                Game g = games[i];
-                Results[i] = CsvParser.Conv(g.GoalDiff);
-
-                WhoPlayed[i] = new double[m_PlayerCount];
-                for (int j = 0; j < m_PlayerCount; j++)
-                {
-                    if (g.TA.Contains(players[j])) WhoPlayed[i][j] = 1;
-                    else if (g.TB.Contains(players[j])) WhoPlayed[i][j] = -1;
-                    else WhoPlayed[i][j] = 0;
-                }
-            }
-        }
-
-        private double[] BuildTeam(int[] team1, int[] team2)
-        {
-            double[] retVector = new double[m_PlayerCount];
-            for (int i = 0; i < m_PlayerCount; i++)
-            {
-                if(team1.Contains(i)) retVector[i] = 1;
-                else if(team2.Contains(i)) retVector[i] = -1;
-                else retVector[i] = 0;
-            }
-
-            return retVector;
-        }
-
-        private double GetTotalError(BackPropNeuralNet bnn, bool print)
-        {
-            double totalError = 0d, totalErrorOnTestData = 0d;
-            int score = 0, outof = 0;
-
-            for (int i = 0; i < m_GameCount; i++)
-            {
-                double[] whoPlayed = GetWhoPlayed(i);
-                double predictedResult = CsvParser.RevConv(bnn.ComputeOutputs(whoPlayed)[0]);
-                double actualResult = CsvParser.RevConv(GetGameResult(i));
-                totalError += (predictedResult - actualResult) * (predictedResult - actualResult);
-            }
-
-            if (print)
-            {
-                Console.WriteLine("MSE is: {0:0.000}", totalError / (double)m_GameCount);
-            }
-
-            return totalError;
-        }
-
-
-        public double Predict(Game g)
-        {
-            double[] whoPlayed = new double[m_PlayerCount];
-
-            for (int j = 0; j < m_PlayerCount; j++)
-            {
-                if (g.TA.Contains(m_Players[j])) whoPlayed[j] = 1;
-                else if (g.TB.Contains(m_Players[j])) whoPlayed[j] = -1;
-                else whoPlayed[j] = 0;
-            }
-            double predictedResult = CsvParser.RevConv(m_Bnn.ComputeOutputs(whoPlayed)[0]);
+            double predictedResult = 0; // CsvParser.RevConv(m_Bnn.ComputeOutputs(whoPlayed)[0]);
 
             return predictedResult;
         }
 
-        public void PrintDebug()
-        {
-
-        }
-    } // Program
-
+    } 
 
 }

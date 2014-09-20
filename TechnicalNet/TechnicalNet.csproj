@@ -40,13 +40,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HistoricalData.cs" />
-    <Compile Include="Metrics\Random.cs" />
+    <Compile Include="Metrics\RandomMetric.cs" />
     <Compile Include="Metrics\IMetric.cs" />
+    <Compile Include="Neural\BackPropNeuralNet.cs" />
+    <Compile Include="Neural\Helpers.cs" />
+    <Compile Include="Neural\Neural.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Neural\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
