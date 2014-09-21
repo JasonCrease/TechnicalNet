@@ -21,6 +21,23 @@ namespace TechnicalNet
         }
     }
 
+    public class Datum
+    {
+        public double Open, Close, High, Low, Volume;
+        public DateTime Date;
+
+        public Datum(DateTime date, double open, double close, double high, double low, double volume)
+        {
+            this.Open = open;
+            this.Close = close;
+            this.High = high;
+            this.Low = low;
+            this.Volume = volume;
+            this.Date = date;
+
+        }
+    }
+
     public class StockHistory
     {
         public double[] Opens;
@@ -28,6 +45,7 @@ namespace TechnicalNet
         public double[] Highs;
         public double[] Lows;
         public double[] Volumes;
+        public List<Datum> Datums;
         public DateTime StartDate;
         public DateTime EndDate;
         public int Count;
@@ -63,34 +81,30 @@ namespace TechnicalNet
                 {
                     if (history != null)
                     {
+                        history.Name = currentShare;
                         history.Count = t;
+                        history.StartDate = ParseDate(bits[0]);
+                        history.Closes = history.Datums.Select(x => x.Close).ToArray();
+                        history.Highs = history.Datums.Select(x => x.High).ToArray();
+                        history.Lows = history.Datums.Select(x => x.Low).ToArray();
+                        history.Opens = history.Datums.Select(x => x.Open).ToArray();
+                        history.Volumes = history.Datums.Select(x => x.Volume).ToArray();
                     }
-                    t = 0;
 
+                    t = 0;
                     history = new StockHistory();
-                    history.StartDate = ParseDate(bits[0]);
-                    history.Name = bits[1];
+                    history.Datums = new List<Datum>();
                     currentShare = bits[1];
-                    history.Closes = new double[250];
-                    history.Highs = new double[250];
-                    history.Lows = new double[250];
-                    history.Opens = new double[250];
-                    history.Volumes = new double[250];
                     list.Add(history);
                 }
-                
-                history.EndDate = ParseDate(bits[0]);
-                history.Opens[t] = double.Parse(bits[2]);
-                history.Highs[t] = double.Parse(bits[3]);
-                history.Lows[t] = double.Parse(bits[4]);
-                history.Closes[t] = double.Parse(bits[5]);
-                history.Volumes[t] = double.Parse(bits[6]);
 
+                history.EndDate = ParseDate(bits[0]);
+                history.Datums.Add(new Datum(ParseDate(bits[0]), double.Parse(bits[2]), double.Parse(bits[5]),
+                    double.Parse(bits[3]), double.Parse(bits[4]), double.Parse(bits[6])));
                 t++;
             }
 
-            // Final share
-            history.Count = t;
+            // TODO: Load final share
 
             return list;
         }
@@ -98,8 +112,8 @@ namespace TechnicalNet
         private static DateTime ParseDate(string str)
         {
             return new DateTime(
-                int.Parse(str.Substring(0, 4)), 
-                int.Parse(str.Substring(4, 2)), 
+                int.Parse(str.Substring(0, 4)),
+                int.Parse(str.Substring(4, 2)),
                 int.Parse(str.Substring(6, 2)));
         }
     }

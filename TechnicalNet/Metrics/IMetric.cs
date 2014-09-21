@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace TechnicalNet.Metrics
 {
-    interface IMetric
+    public interface IMetric
     {
-        double Analyse(HistoricalData data);
+        double Val { get; set; }
+        void Analyse(HistoricalData data);
+        void Render(Graph g);
     }
 }
