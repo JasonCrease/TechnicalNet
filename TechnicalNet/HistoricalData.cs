@@ -44,6 +44,7 @@ namespace TechnicalNet
         public double[] Highs;
         public double[] Lows;
         public double[] Volumes;
+        public double[] ATR;    // Average true range http://en.wikipedia.org/wiki/Average_true_range
         public List<Datum> Datums;
         public DateTime StartDate;
         public DateTime EndDate;
@@ -93,6 +94,7 @@ namespace TechnicalNet
                         history.Lows = history.Datums.Select(x => x.Low).ToArray();
                         history.Opens = history.Datums.Select(x => x.Open).ToArray();
                         history.Volumes = history.Datums.Select(x => x.Volume).ToArray();
+                        history.CalculateATR();
 
                         if (history.Count > 230)
                             list.Add(history);
@@ -114,6 +116,29 @@ namespace TechnicalNet
             // TODO: Load final share
 
             return list;
+        }
+
+        private void CalculateATR()
+        {
+            int n = 14;
+            ATR = new double[Count];
+
+            for (int i = 0; i < n; i++)
+                ATR[0] += TrueRange(i);
+            ATR[0] = (ATR[0] / (double)n);
+
+            for (int i = 1; i < Count; i++)
+            {
+                ATR[i] += TrueRange(i);
+                ATR[i] += ATR[i - 1] * (double)(n - 1);
+                ATR[i] = (ATR[i] / (double)n);
+            }
+        }
+
+        private double TrueRange(int i)
+        {
+            return Math.Max(Highs[i] - Lows[i],
+                   Math.Max(Math.Abs(Highs[i] - Opens[i]), Math.Abs(Lows[i] - Opens[i])));
         }
 
         private static DateTime ParseDate(string str)

@@ -49,6 +49,8 @@
     <Compile Include="Neural\BackPropNeuralNet.cs" />
     <Compile Include="Neural\Helpers.cs" />
     <Compile Include="Neural\Neural.cs" />
+    <Compile Include="Predictors\AdxPredictor.cs" />
+    <Compile Include="Predictors\DummyPredictor.cs" />
     <Compile Include="Predictors\IPredictor.cs" />
     <Compile Include="Predictors\EmaPredictor.cs" />
     <Compile Include="Predictors\MomentumPredictor.cs" />
