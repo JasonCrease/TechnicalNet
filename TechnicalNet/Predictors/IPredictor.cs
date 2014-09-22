@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Drawing;
 
-namespace TechnicalNet.Metrics
+namespace TechnicalNet.Predictors
 {
-    public interface IMetric
+    public interface IPredictor
     {
-        double Val { get; set; }
+        double Val { get; }
         void Analyse(StockHistory data);
-        void Render(Graph g);
+        string Name { get; }
     }
 }

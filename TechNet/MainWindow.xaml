@@ -1,16 +1,17 @@
 ﻿<Window x:Class="TechNet.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Tech Net" Height="550" Width="700">
+        Title="Tech Net" Width="900" Height="600" >
     <Grid>
         <StackPanel Orientation="Horizontal">
-            <Image Name="img" Width="550" Height="500"></Image>
-            <StackPanel Orientation="Vertical">
+            <Image Name="img"></Image>
+            <StackPanel Orientation="Vertical" >
                 <Label Name="LabelShareName" Content="XXXXX"/>
+                <Label Name="LabelAction" Content="XXXXX"/>
                 <Button Name="ButtonNextShare" Content="Next share" Click="ButtonNextShare_Click"/>
                 <Button Name="ButtonPrevShare" Content="Prev share" Click="ButtonPrevShare_Click"/>
-                <CheckBox Name="CheckBoxMetric1" Content="Metric1"/>
-                <CheckBox Name="CheckBoxMetric2" Content="Metric2"/>
+                <StackPanel Name="MetricsPanel" Orientation="Vertical">
+                </StackPanel>
             </StackPanel>
         </StackPanel>
     </Grid>

@@ -24,7 +24,7 @@ namespace TechnicalNet
         {
             m_StockHistory = stockHistory;
             m_Metrics = metrics;
-            Bitmap = new Bitmap(600, 500);
+            Bitmap = new Bitmap(700, 600);
             m_Graphics = Graphics.FromImage(Bitmap);
 
             yMin = stockHistory.Opens.Min();
@@ -37,13 +37,14 @@ namespace TechnicalNet
             DrawBottomAxis();
             DrawValues();
             DrawMetrics();
+            DrawCutoff();
         }
 
         private void DrawMetrics()
         {
             foreach(IMetric metric in m_Metrics)
             {
-
+                metric.Render(this);
             }
         }
 
@@ -59,10 +60,10 @@ namespace TechnicalNet
                 double val = m_StockHistory.Opens[i];
                 double oldy = y;
                 double oldx = x;
-                y = ((val - yMin) / yRange) * 460d;
+                y = (((yMax - val) / yRange) * 460d) + GraphStartY;
                 x = (i * 2) + GraphStartX;
 
-                m_Graphics.DrawEllipse(penBlue, (int)x, (int)y, 2, 2);
+                //m_Graphics.DrawEllipse(penBlue, (int)x, (int)y, 2, 2);
 
                 if (i > 0)
                 {
@@ -79,6 +80,12 @@ namespace TechnicalNet
             m_Graphics.DrawString(yMax.ToString(), new Font(FontFamily.GenericSerif, 6), Brushes.BlueViolet, 5, 10);
         }
 
+        private void DrawCutoff()
+        {
+            Pen p = new Pen(Color.Gray);
+            m_Graphics.DrawLine(p, GraphStartX + 300, 20, GraphStartX + 300, 480);
+        }
+
         private void DrawBottomAxis()
         {
             Pen p = new Pen(Color.Black);
@@ -89,5 +96,34 @@ namespace TechnicalNet
                 new Font(FontFamily.GenericSansSerif, 6), Brushes.BlueViolet, 500 + GraphStartX - 30, 480);
         }
 
+        internal void DrawPoint(Color color, double t, double val)
+        {
+            Pen p = new Pen(color);
+            double y = (((yMax - val) / yRange) * 460d) + GraphStartY;
+            double x = (t * 2) + GraphStartX;
+            m_Graphics.DrawRectangle(p, (int)x, (int)(y), 1, 1);
+        }
+
+        internal void DrawJoinedPoints(Color color, double[] ys)
+        {
+            Pen pen = new Pen(color);
+
+            double y = 0d;
+            double x = 0d;
+
+            for (int i = 0; i < ys.Length; i++)
+            {
+                double val = ys[i];
+                double oldy = y;
+                double oldx = x;
+                y = (((yMax - val) / yRange) * 460d) + GraphStartY;
+                x = (i * 2) + GraphStartX;
+
+                if (i > 0 && y > 1 && oldy > 1)
+                {
+                    m_Graphics.DrawLine(pen, (int)oldx, (int)oldy, (int)x, (int)y);
+                }
+            }
+        }
     }
 }

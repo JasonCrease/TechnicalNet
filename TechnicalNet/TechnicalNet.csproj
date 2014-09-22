@@ -42,15 +42,21 @@
   <ItemGroup>
     <Compile Include="Graph.cs" />
     <Compile Include="HistoricalData.cs" />
+    <Compile Include="Metrics\BollingerBandsMetric.cs" />
     <Compile Include="Metrics\SemaMetric.cs" />
     <Compile Include="Metrics\RandomMetric.cs" />
     <Compile Include="Metrics\IMetric.cs" />
     <Compile Include="Neural\BackPropNeuralNet.cs" />
     <Compile Include="Neural\Helpers.cs" />
     <Compile Include="Neural\Neural.cs" />
+    <Compile Include="Predictors\IPredictor.cs" />
+    <Compile Include="Predictors\EmaPredictor.cs" />
+    <Compile Include="Predictors\MomentumPredictor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="TestStrategy\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

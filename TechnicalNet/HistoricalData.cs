@@ -89,13 +89,16 @@ namespace TechnicalNet
                         history.Lows = history.Datums.Select(x => x.Low).ToArray();
                         history.Opens = history.Datums.Select(x => x.Open).ToArray();
                         history.Volumes = history.Datums.Select(x => x.Volume).ToArray();
+
+                        if (history.Count > 200)
+                            list.Add(history);
                     }
 
-                    t = 0;
                     history = new StockHistory();
                     history.Datums = new List<Datum>();
                     currentShare = bits[1];
-                    list.Add(history);
+
+                    t = 0;
                 }
 
                 history.EndDate = ParseDate(bits[0]);
