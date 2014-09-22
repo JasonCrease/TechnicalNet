@@ -91,8 +91,7 @@ namespace TechNet
             Graph g = new Graph(data, metrics);
             img.Source = ToBitmapSource(g.Bitmap);
             LabelShareName.Content = data.Name;
-
-            //LabelAction.Content = emaPredictor.Val;
+            LabelProfit.Content = data.Profit.ToString("0.00%");
         }
 
         private void ButtonNextShare_Click(object sender, RoutedEventArgs e)

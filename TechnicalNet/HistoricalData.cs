@@ -34,7 +34,6 @@ namespace TechnicalNet
             this.Low = low;
             this.Volume = volume;
             this.Date = date;
-
         }
     }
 
@@ -50,6 +49,11 @@ namespace TechnicalNet
         public DateTime EndDate;
         public int Count;
         public string Name { get; private set; }
+
+        public double Profit
+        {
+            get { return (Closes[240] - Closes[150]) / Closes[150]; }
+        }
 
         public StockHistory()
         {
@@ -90,7 +94,7 @@ namespace TechnicalNet
                         history.Opens = history.Datums.Select(x => x.Open).ToArray();
                         history.Volumes = history.Datums.Select(x => x.Volume).ToArray();
 
-                        if (history.Count > 200)
+                        if (history.Count > 230)
                             list.Add(history);
                     }
 

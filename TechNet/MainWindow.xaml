@@ -7,7 +7,7 @@
             <Image Name="img"></Image>
             <StackPanel Orientation="Vertical" >
                 <Label Name="LabelShareName" Content="XXXXX"/>
-                <Label Name="LabelAction" Content="XXXXX"/>
+                <Label Name="LabelProfit" Content="XXXXX"/>
                 <Button Name="ButtonNextShare" Content="Next share" Click="ButtonNextShare_Click"/>
                 <Button Name="ButtonPrevShare" Content="Prev share" Click="ButtonPrevShare_Click"/>
                 <StackPanel Name="MetricsPanel" Orientation="Vertical">
