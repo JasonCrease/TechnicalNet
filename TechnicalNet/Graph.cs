@@ -144,10 +144,11 @@ namespace TechnicalNet
 
         public void DrawPredictionPoint(double val, int t)
         {
-            Pen p = new Pen(Color.RosyBrown);
+            Pen p = new Pen(Color.Red);
             double y = TransformY(val);
             double x = TransformX(t);
-            m_Graphics.DrawEllipse(p, (int)x, (int)(y), 3, 3);
+            m_Graphics.DrawEllipse(p, (int)x - 2, (int)y - 2 , 4, 4);
+            m_Graphics.DrawEllipse(p, (int)x - 5, (int)y - 5, 10, 10);
         }
 
         private double TransformX(double x)

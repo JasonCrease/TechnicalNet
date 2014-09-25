@@ -17,6 +17,7 @@ using TechnicalNet;
 using TechnicalNet.Metrics;
 using TechnicalNet.Predictors;
 using System.Runtime.InteropServices;
+using TechnicalNet.Strategy;
 
 namespace TechNet
 {
@@ -74,13 +75,13 @@ namespace TechNet
 
             var metrics = new List<IMetric>();
 
-            SemaMetric semaMetric = new SemaMetric(data);
-            metrics.Add(semaMetric);
-            FemaMetric femaMetric = new FemaMetric(data);
-            metrics.Add(femaMetric);
-
-            //BollingerBandsMetric bollingerBandsMetric = new BollingerBandsMetric(data);
-            //metrics.Add(bollingerBandsMetric);
+            //SemaMetric semaMetric = new SemaMetric(data);
+            //metrics.Add(semaMetric);
+            //FemaMetric femaMetric = new FemaMetric(data);
+            //metrics.Add(femaMetric);
+            
+            BollingerBandsMetric bollingerBandsMetric = new BollingerBandsMetric(data);
+            metrics.Add(bollingerBandsMetric);
 
             foreach (Label label in m_PredictorLabels)
             {
@@ -90,6 +91,11 @@ namespace TechNet
             }
 
             Graph g = new Graph(data, metrics);
+
+            IStrategy strategy = new ThingsDontChangeStrategy();
+            double val = strategy.PredictValue(data, 150, 50);
+            g.DrawPredictionPoint(val, 150 + 50);
+
             img.Source = ToBitmapSource(g.Bitmap);
             LabelShareName.Content = data.Name;
             LabelProfit.Content = data.Profit.ToString("0.00%");
