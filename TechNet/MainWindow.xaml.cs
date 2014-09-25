@@ -46,8 +46,9 @@ namespace TechNet
 
             m_Predictors = new List<IPredictor>();
             m_Predictors.Add(new EmaPredictor());
-            m_Predictors.Add(new TenDaysMomentumPredictor());
-            m_Predictors.Add(new HundredDaysMomentumPredictor());
+            m_Predictors.Add(new TenDaysTangentPredictor());
+            m_Predictors.Add(new HundredDaysTangentPredictor());
+            m_Predictors.Add(new EmaPredictor());
 
             foreach (IPredictor p in m_Predictors)
             {

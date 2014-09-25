@@ -6,18 +6,19 @@ using System.Threading.Tasks;
 
 namespace TechnicalNet.Predictors
 {
-    public class TenDaysMomentumPredictor : MomentumPredictor
+    public class TenDaysTangentPredictor : TangentPredictor
     {
-        public override string Name { get { return "10 day mom"; } }
+        public override string Name { get { return "10 day tangent"; } }
         protected override int N { get { return 10; } }
     }
-    public class HundredDaysMomentumPredictor : MomentumPredictor
+    public class HundredDaysTangentPredictor : TangentPredictor
     {
-        public override string Name { get { return "100 day mom"; } }
+        public override string Name { get { return "100 day tangent"; } }
         protected override int N { get { return 100; } }
     }
 
-    public abstract class MomentumPredictor : IPredictor
+    // This just draw a straight line and gets the tangent.
+    public abstract class TangentPredictor : IPredictor
     {
         public abstract string Name { get; }
         protected abstract int N { get; }

@@ -7,6 +7,9 @@ using System.Drawing;
 
 namespace TechnicalNet.Predictors
 {
+    /// <summary>
+    /// Exponential-moving average crossover.
+    /// </summary>
     public class EmaPredictor : IPredictor
     {
         public string Name { get { return "EMA crossover"; } }
