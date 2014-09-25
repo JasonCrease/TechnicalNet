@@ -22,12 +22,14 @@ namespace TechnicalNet
         int MarginVertical = 20;
 
         int BitmapHeight = 600;
-        int BitmapWidth = 900;
+        int BitmapWidth = 800;
 
         int GraphHeight = -1;
         int GraphWidth = -1;
 
         double HorizontalStretch = -1;
+
+        Font m_Font = new Font("Arial", 6);
 
         public Graph(TechnicalNet.StockHistory stockHistory, List<TechnicalNet.Metrics.IMetric> metrics)
         {
@@ -74,8 +76,8 @@ namespace TechnicalNet
                 double val = m_StockHistory.Opens[i];
                 double oldy = y;
                 double oldx = x;
-                y = (((yMax - val) / yRange) * GraphHeight) + MarginVertical;
-                x = (i * HorizontalStretch) + MarginHorizontal;
+                y = TransformY(val);
+                x = TransformX(i);
 
                 //m_Graphics.DrawEllipse(penBlue, (int)x, (int)y, 2, 2);
 
@@ -90,8 +92,8 @@ namespace TechnicalNet
         {
             Pen p = new Pen(Color.Black);
             m_Graphics.DrawLine(p, MarginHorizontal, MarginVertical, MarginHorizontal, GraphHeight + MarginVertical);
-            m_Graphics.DrawString(yMax.ToString(), new Font(FontFamily.GenericSerif, 9), Brushes.BlueViolet, 5, MarginVertical);
-            m_Graphics.DrawString(yMin.ToString(), new Font(FontFamily.GenericSerif, 9), Brushes.BlueViolet, 5, GraphHeight + MarginVertical);
+            m_Graphics.DrawString(yMax.ToString(), m_Font, Brushes.BlueViolet, 5, MarginVertical);
+            m_Graphics.DrawString(yMin.ToString(), m_Font, Brushes.BlueViolet, 5, GraphHeight + MarginVertical);
         }
 
         private void DrawCutoff()
@@ -105,16 +107,16 @@ namespace TechnicalNet
             Pen p = new Pen(Color.Black);
             m_Graphics.DrawLine(p, MarginHorizontal, GraphHeight + MarginVertical, GraphWidth + MarginHorizontal, GraphHeight + MarginVertical);
             m_Graphics.DrawString(m_StockHistory.StartDate.ToShortDateString(),
-                new Font(FontFamily.GenericSansSerif, 9), Brushes.BlueViolet, MarginHorizontal, GraphHeight + MarginVertical);
+                m_Font, Brushes.BlueViolet, MarginHorizontal, GraphHeight + MarginVertical);
             m_Graphics.DrawString(m_StockHistory.EndDate.ToShortDateString(),
-                new Font(FontFamily.GenericSansSerif, 9), Brushes.BlueViolet, GraphWidth + MarginHorizontal - 20, GraphHeight + MarginVertical);
+                m_Font, Brushes.BlueViolet, GraphWidth + MarginHorizontal - 20, GraphHeight + MarginVertical);
         }
 
         internal void DrawPoint(Color color, double t, double val)
         {
             Pen p = new Pen(color);
-            double y = (((yMax - val) / yRange) * GraphWidth) + MarginVertical;
-            double x = (t * HorizontalStretch) + MarginHorizontal;
+            double y = TransformY(val);
+            double x = TransformX(t);
             m_Graphics.DrawRectangle(p, (int)x, (int)(y), 1, 1);
         }
 
@@ -130,14 +132,32 @@ namespace TechnicalNet
                 double val = ys[i];
                 double oldy = y;
                 double oldx = x;
-                y = (((yMax - val) / yRange) * GraphHeight) + MarginVertical;
-                x = (i * HorizontalStretch) + MarginHorizontal;
+                y = TransformY(val);
+                x = TransformX(i);
 
-                if (i > 0 && y > 1 && oldy > 1)
+                if (i > 0 && y > 0 && oldy > 0 && y < BitmapHeight)
                 {
                     m_Graphics.DrawLine(pen, (int)oldx, (int)oldy, (int)x, (int)y);
                 }
             }
+        }
+
+        public void DrawPredictionPoint(double val, int t)
+        {
+            Pen p = new Pen(Color.RosyBrown);
+            double y = TransformY(val);
+            double x = TransformX(t);
+            m_Graphics.DrawEllipse(p, (int)x, (int)(y), 3, 3);
+        }
+
+        private double TransformX(double x)
+        {
+            return (x * HorizontalStretch) + MarginHorizontal;
+        }
+
+        private double TransformY(double y)
+        {
+            return (((yMax - y) / yRange) * GraphHeight) + MarginVertical;
         }
     }
 }
