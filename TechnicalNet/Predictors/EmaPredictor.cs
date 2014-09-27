@@ -17,7 +17,7 @@ namespace TechnicalNet.Predictors
         private double Rate1 = 0.8D;
         private double Rate2 = 0.98D;
 
-        public void Analyse(StockHistory stock)
+        public void Analyse(TechnicalNet.RealData.StockHistory stock)
         {
             double[] data1 = new double[stock.Count];
             data1[0] = stock.Closes[0];

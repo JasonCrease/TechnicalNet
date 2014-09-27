@@ -10,7 +10,7 @@ namespace TechNetConsole
     {
         static void Main(string[] args)
         {
-            TechnicalNet.HistoricalData technicalNet = new TechnicalNet.HistoricalData();
+            TechnicalNet.RealData.StockHistorySet technicalNet = new TechnicalNet.RealData.Sp500History();
         }
     }
 }

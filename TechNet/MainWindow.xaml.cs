@@ -18,6 +18,7 @@ using TechnicalNet.Metrics;
 using TechnicalNet.Predictors;
 using System.Runtime.InteropServices;
 using TechnicalNet.Strategy;
+using TechnicalNet.RealData;
 
 namespace TechNet
 {
@@ -26,14 +27,14 @@ namespace TechNet
     /// </summary>
     public partial class MainWindow : Window
     {
-        TechnicalNet.HistoricalData m_Data;
+        StockHistorySet m_Data;
         int m_ShareNum;
 
         public MainWindow()
         {
             InitializeComponent();
             AddPredictors();
-            m_Data = new TechnicalNet.HistoricalData();
+            m_Data = new Sp500History();
             m_ShareNum = 0;
             UpdateImage();
         }

@@ -8,6 +8,6 @@ namespace TechnicalNet.Strategy
 {
     public interface IStrategy
     {
-        double PredictValue(StockHistory stockHistory, int today, int daysInFuture);
+        double PredictValue(TechnicalNet.RealData.StockHistory stockHistory, int today, int daysInFuture);
     }
 }

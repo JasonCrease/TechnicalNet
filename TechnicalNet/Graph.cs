@@ -15,7 +15,7 @@ namespace TechnicalNet
         double yRange;
         public Bitmap Bitmap { get; set; }
         Graphics m_Graphics;
-        TechnicalNet.StockHistory m_StockHistory;
+        TechnicalNet.RealData.StockHistory m_StockHistory;
         List<TechnicalNet.Metrics.IMetric> m_Metrics;
 
         int MarginHorizontal = 50;
@@ -31,7 +31,7 @@ namespace TechnicalNet
 
         Font m_Font = new Font("Arial", 6);
 
-        public Graph(TechnicalNet.StockHistory stockHistory, List<TechnicalNet.Metrics.IMetric> metrics)
+        public Graph(TechnicalNet.RealData.StockHistory stockHistory, List<TechnicalNet.Metrics.IMetric> metrics)
         {
             m_StockHistory = stockHistory;
             m_Metrics = metrics;

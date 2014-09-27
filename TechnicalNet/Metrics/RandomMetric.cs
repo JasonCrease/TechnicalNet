@@ -11,7 +11,7 @@ namespace TechnicalNet.Metrics
     {
         public double Val { get; set; }
 
-        public void Analyse(StockHistory data)
+        public void Analyse(TechnicalNet.RealData.StockHistory data)
         {
             Val = (new System.Random()).NextDouble() - 0.5D;
         }

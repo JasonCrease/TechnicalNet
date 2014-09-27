@@ -9,7 +9,7 @@ namespace TechnicalNet.Predictors
     public interface IPredictor
     {
         double Val { get; }
-        void Analyse(StockHistory data);
+        void Analyse(TechnicalNet.RealData.StockHistory data);
         string Name { get; }
     }
 }

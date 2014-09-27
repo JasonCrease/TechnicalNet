@@ -41,7 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Graph.cs" />
-    <Compile Include="HistoricalData.cs" />
+    <Compile Include="RealData\StockHistorySet.cs" />
+    <Compile Include="RealData\Datum.cs" />
+    <Compile Include="RealData\Sp500History.cs" />
     <Compile Include="Metrics\BollingerBandsMetric.cs" />
     <Compile Include="Metrics\SemaMetric.cs" />
     <Compile Include="Metrics\RandomMetric.cs" />
@@ -55,6 +57,7 @@
     <Compile Include="Predictors\EmaPredictor.cs" />
     <Compile Include="Predictors\MomentumPredictor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RealData\StockHistory.cs" />
     <Compile Include="Strategy\Evaluator.cs" />
     <Compile Include="Strategy\IStrategy.cs" />
     <Compile Include="Strategy\ThingsDontChangeStrategy.cs" />

@@ -10,7 +10,7 @@ namespace TechnicalNet.Metrics
     public interface IMetric
     {
         double Val { get; set; }
-        void Analyse(StockHistory data);
+        void Analyse(TechnicalNet.RealData.StockHistory data);
         void Render(Graph g);
     }
 }

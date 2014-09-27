@@ -3,40 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.IO;
 
-namespace TechnicalNet
+namespace TechnicalNet.RealData
 {
-    public class HistoricalData
-    {
-        public List<StockHistory> AllStocks { get; set; }
-
-        public HistoricalData()
-        {
-            using (StreamReader sr = new StreamReader(".\\..\\..\\..\\data\\sp500hst.txt"))
-            {
-                string csv = sr.ReadToEnd();
-                AllStocks = StockHistory.BuildCollection(csv);
-            }
-        }
-    }
-
-    public class Datum
-    {
-        public double Open, Close, High, Low, Volume;
-        public DateTime Date;
-
-        public Datum(DateTime date, double open, double close, double high, double low, double volume)
-        {
-            this.Open = open;
-            this.Close = close;
-            this.High = high;
-            this.Low = low;
-            this.Volume = volume;
-            this.Date = date;
-        }
-    }
-
     public class StockHistory
     {
         public double[] Opens;

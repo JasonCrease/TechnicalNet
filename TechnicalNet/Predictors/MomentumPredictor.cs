@@ -28,7 +28,7 @@ namespace TechnicalNet.Predictors
             private set;
         }
 
-        public void Analyse(StockHistory data)
+        public void Analyse(TechnicalNet.RealData.StockHistory data)
         {
             int lastDay = 150;
             double finalClose = data.Closes[lastDay];

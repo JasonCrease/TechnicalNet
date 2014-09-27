@@ -12,7 +12,7 @@ namespace TechnicalNet.Predictors
         public string Name { get { return "Dummy"; } }
         public double Val { get; private set; }
 
-        public void Analyse(StockHistory stock)
+        public void Analyse(TechnicalNet.RealData.StockHistory stock)
         {
             throw new NotImplementedException();
         }

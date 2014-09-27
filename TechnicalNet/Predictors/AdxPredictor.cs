@@ -13,7 +13,7 @@ namespace TechnicalNet.Predictors
         public string Name { get { return "ADX"; } }
         public double Val { get; private set; }
 
-        public void Analyse(StockHistory stock)
+        public void Analyse(TechnicalNet.RealData.StockHistory stock)
         {
             double dmplus = 0;
             double dmminus = 0;
