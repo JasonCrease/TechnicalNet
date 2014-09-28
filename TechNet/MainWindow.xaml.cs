@@ -33,40 +33,42 @@ namespace TechNet
         public MainWindow()
         {
             InitializeComponent();
+
             AddPredictors();
             m_Data = new Sp500History();
-            m_ShareNum = 0;
+            m_ShareNum = 200;
             UpdateImage();
         }
 
-        List<IPredictor> m_Predictors;
         List<Label> m_PredictorLabels;
 
         private void AddPredictors()
         {
             m_PredictorLabels = new List<Label>();
 
-            m_Predictors = new List<IPredictor>();
-            m_Predictors.Add(new EmaPredictor());
-            m_Predictors.Add(new TenDaysTangentPredictor());
-            m_Predictors.Add(new HundredDaysTangentPredictor());
-            m_Predictors.Add(new EmaPredictor());
+            List<IPredictor> predictors = new List<IPredictor>();
+            predictors.Add(new EmaPredictor());
+            predictors.Add(new TenDaysTangentPredictor());
+            predictors.Add(new HundredDaysTangentPredictor());
+            predictors.Add(new EmaPredictor());
 
-            foreach (IPredictor p in m_Predictors)
+            foreach (IPredictor p in predictors)
             {
                 StackPanel panel = new StackPanel();
                 panel.Orientation = Orientation.Horizontal;
+                MetricsPanel.Children.Add(panel);
+
                 Label nameLabel = new Label();
                 nameLabel.Content = p.Name;
                 nameLabel.Width = 120;
+
                 Label valLabel = new Label();
                 valLabel.Content = p.Val;
                 valLabel.Tag = p;
+                m_PredictorLabels.Add(valLabel);
+
                 panel.Children.Add(nameLabel);
                 panel.Children.Add(valLabel);
-                MetricsPanel.Children.Add(panel);
-
-                m_PredictorLabels.Add(valLabel);
             }
         }
 
@@ -80,7 +82,6 @@ namespace TechNet
             //metrics.Add(semaMetric);
             //FemaMetric femaMetric = new FemaMetric(data);
             //metrics.Add(femaMetric);
-            
             BollingerBandsMetric bollingerBandsMetric = new BollingerBandsMetric(data);
             metrics.Add(bollingerBandsMetric);
 
@@ -93,7 +94,7 @@ namespace TechNet
 
             Graph g = new Graph(data, metrics);
 
-            IStrategy strategy = new ThingsDontChangeStrategy();
+            Strategy strategy = new ThingsDontChangeStrategy();
             double val = strategy.PredictValue(data, 150, 50);
             g.DrawPredictionPoint(val, 150 + 50);
 
@@ -104,14 +105,20 @@ namespace TechNet
 
         private void ButtonNextShare_Click(object sender, RoutedEventArgs e)
         {
-            m_ShareNum++;
-            UpdateImage();
+            if (m_ShareNum < m_Data.AllStocks.Count - 1)
+            {
+                m_ShareNum++;
+                UpdateImage();
+            }
         }
 
         private void ButtonPrevShare_Click(object sender, RoutedEventArgs e)
         {
-            m_ShareNum--;
-            UpdateImage();
+            if (m_ShareNum > 0)
+            {
+                m_ShareNum--;
+                UpdateImage();
+            }
         }
 
         [DllImport("gdi32")]

@@ -1,18 +1,33 @@
 ﻿<Window x:Class="TechNet.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Tech Net" Width="1100" Height="640" >
+        Title="Tech Net" Width="1100" Height="690" >
     <Grid>
-        <StackPanel Orientation="Horizontal">
-            <Image Name="img" Width="800" Height="600"></Image>
-            <StackPanel Orientation="Vertical" >
-                <Label Name="LabelShareName" Content="XXXXX"/>
-                <Label Name="LabelProfit" Content="XXXXX"/>
-                <Button Name="ButtonNextShare" Content="Next share" Click="ButtonNextShare_Click"/>
-                <Button Name="ButtonPrevShare" Content="Prev share" Click="ButtonPrevShare_Click"/>
-                <StackPanel Name="MetricsPanel" Orientation="Vertical">
+        <TabControl>
+            <TabItem Header="Strategy Comparer">
+
+                <StackPanel Orientation="Vertical" >
+                    <Button Name="ButtonFindProfits" Content="Prev share" Click="ButtonPrevShare_Click"/>
+                    <StackPanel Name="MetricsPanel" Orientation="Vertical">
+                    </StackPanel>
                 </StackPanel>
-            </StackPanel>
-        </StackPanel>
+            </TabItem>
+            
+            <TabItem Header="Individual Stock">
+
+                <StackPanel Orientation="Horizontal">
+                    <Image Name="img" Width="800" Height="600"></Image>
+                    <StackPanel Orientation="Vertical" >
+                        <Label Name="LabelShareName" Content="XXXXX"/>
+                        <Label Name="LabelProfit" Content="XXXXX"/>
+                        <Button Name="ButtonNextShare" Content="Next share" Click="ButtonNextShare_Click"/>
+                        <Button Name="ButtonPrevShare" Content="Prev share" Click="ButtonPrevShare_Click"/>
+                        <StackPanel Name="MetricsPanel" Orientation="Vertical">
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
