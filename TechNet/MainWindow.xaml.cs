@@ -34,10 +34,46 @@ namespace TechNet
         {
             InitializeComponent();
 
-            AddPredictors();
             m_Data = new Sp500History();
             m_ShareNum = 200;
+
+            AddPredictors();
+            AddStrategies();
             UpdateImage();
+        }
+
+        List<Label> m_StrategyLabels;
+
+        private void AddStrategies()
+        {
+            m_StrategyLabels = new List<Label>();
+
+            List<AbstractStrategy> strategies = new List<AbstractStrategy>();
+            strategies.Add(new ThingsDontChangeStrategy());
+            strategies.Add(new OracleStrategy());
+            strategies.Add(new LinearSlopeStrategy());
+            strategies.Add(new LogSlopeStrategy());
+            strategies.Add(new EverythingWillDoubleStrategy());
+            strategies.Add(new EverythingWillHalfStrategy());
+
+            foreach (AbstractStrategy s in strategies)
+            {
+                StackPanel panel = new StackPanel();
+                panel.Orientation = Orientation.Horizontal;
+                StrategyPanel.Children.Add(panel);
+
+                Label nameLabel = new Label();
+                nameLabel.Content = s.Name;
+                nameLabel.Width = 120;
+
+                Label valLabel = new Label();
+                valLabel.Content = s.GetStrategyProfit(m_Data, 150, 50).ToString("$0.00");
+                valLabel.Tag = s;
+                m_StrategyLabels.Add(valLabel);
+
+                panel.Children.Add(nameLabel);
+                panel.Children.Add(valLabel);
+            }
         }
 
         List<Label> m_PredictorLabels;
@@ -74,7 +110,7 @@ namespace TechNet
 
         public void UpdateImage()
         {
-            StockHistory data = m_Data.AllStocks[m_ShareNum];
+            StockHistory data = m_Data.AllStockHistories[m_ShareNum];
 
             var metrics = new List<IMetric>();
 
@@ -94,7 +130,7 @@ namespace TechNet
 
             Graph g = new Graph(data, metrics);
 
-            Strategy strategy = new ThingsDontChangeStrategy();
+            AbstractStrategy strategy = new ThingsDontChangeStrategy();
             double val = strategy.PredictValue(data, 150, 50);
             g.DrawPredictionPoint(val, 150 + 50);
 
@@ -105,7 +141,7 @@ namespace TechNet
 
         private void ButtonNextShare_Click(object sender, RoutedEventArgs e)
         {
-            if (m_ShareNum < m_Data.AllStocks.Count - 1)
+            if (m_ShareNum < m_Data.AllStockHistories.Count - 1)
             {
                 m_ShareNum++;
                 UpdateImage();
@@ -136,6 +172,11 @@ namespace TechNet
 
             DeleteObject(ptr);
             return bs;
+        }
+
+        private void ButtonFindProfits_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

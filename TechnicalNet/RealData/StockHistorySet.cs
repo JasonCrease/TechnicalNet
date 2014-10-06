@@ -8,6 +8,6 @@ namespace TechnicalNet.RealData
 {
     public abstract class StockHistorySet
     {
-        public List<StockHistory> AllStocks { get; set; }
+        public List<StockHistory> AllStockHistories { get; set; }
     }
 }

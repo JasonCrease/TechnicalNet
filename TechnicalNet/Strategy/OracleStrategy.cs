@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace TechnicalNet.Strategy
 {
-    // Just return today's value
-    public class ThingsDontChangeStrategy : AbstractStrategy
+    // A cheaty oracle strategy. Just return the value in 
+    public class OracleStrategy : AbstractStrategy
     {
         public override string Name
         {
-            get { return "Things don't change"; }
+            get { return "Oracle"; }
         }
 
         public override double PredictValue(TechnicalNet.RealData.StockHistory stockHistory, int today, int daysInFuture)
         {
-            return stockHistory.Closes[today];
+            return stockHistory.Closes[today + daysInFuture];
         }
     }
 }

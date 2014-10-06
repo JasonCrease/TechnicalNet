@@ -14,7 +14,7 @@ namespace TechnicalNet.RealData
             using (StreamReader sr = new StreamReader(".\\..\\..\\..\\data\\sp500hst.txt"))
             {
                 string csv = sr.ReadToEnd();
-                AllStocks = StockHistory.BuildCollection(csv);
+                AllStockHistories = StockHistory.BuildCollection(csv);
             }
         }
     }

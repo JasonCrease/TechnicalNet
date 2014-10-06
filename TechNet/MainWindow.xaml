@@ -7,8 +7,8 @@
             <TabItem Header="Strategy Comparer">
 
                 <StackPanel Orientation="Vertical" >
-                    <Button Name="ButtonFindProfits" Content="Prev share" Click="ButtonPrevShare_Click"/>
-                    <StackPanel Name="MetricsPanel" Orientation="Vertical">
+                    <Button Name="ButtonFindProfits" Content="Find Profits" Margin ="10,10,10,10" Width="200" Click="ButtonFindProfits_Click"/>
+                    <StackPanel Name="StrategyPanel" Orientation="Vertical">
                     </StackPanel>
                 </StackPanel>
             </TabItem>

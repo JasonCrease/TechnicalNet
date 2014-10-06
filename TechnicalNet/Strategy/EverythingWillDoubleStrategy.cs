@@ -6,17 +6,18 @@ using System.Threading.Tasks;
 
 namespace TechnicalNet.Strategy
 {
-    // Just return today's value
-    public class ThingsDontChangeStrategy : AbstractStrategy
+    public class EverythingWillDoubleStrategy : AbstractStrategy
     {
         public override string Name
         {
-            get { return "Things don't change"; }
+            get { return "Everything doubles"; }
         }
 
         public override double PredictValue(TechnicalNet.RealData.StockHistory stockHistory, int today, int daysInFuture)
         {
-            return stockHistory.Closes[today];
+            double todayClose = stockHistory.Closes[today];
+
+            return todayClose * 2;
         }
     }
 }

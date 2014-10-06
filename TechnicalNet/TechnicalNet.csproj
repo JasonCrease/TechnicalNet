@@ -58,7 +58,12 @@
     <Compile Include="Predictors\MomentumPredictor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RealData\StockHistory.cs" />
-    <Compile Include="Strategy\Strategy.cs" />
+    <Compile Include="Strategy\AbstractStrategy.cs" />
+    <Compile Include="Strategy\EverythingWillHalfStrategy.cs" />
+    <Compile Include="Strategy\EverythingWillDoubleStrategy.cs" />
+    <Compile Include="Strategy\LogSlopeStrategy.cs" />
+    <Compile Include="Strategy\LinearSlopeStrategy.cs" />
+    <Compile Include="Strategy\OracleStrategy.cs" />
     <Compile Include="Strategy\ThingsDontChangeStrategy.cs" />
   </ItemGroup>
   <ItemGroup />
