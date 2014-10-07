@@ -8,28 +8,26 @@ using TechnicalNet.Predictor;
 
 namespace TechnicalNet.Scheme
 {
-    public class LongOneOrShortOneScheme : AbstractScheme
+    public class BuyEverythingScheme : AbstractScheme
     {
-        public override string Name { get { return "Long1Short1"; } }
+        public override string Name { get { return "BuyEverything"; } }
+
+        Random random = new Random();
 
         public override double GetSchemeProfit(StockHistorySet testData, AbstractPredictor Predictor, int today, int daysToPredict)
         {
             double profit = 0D;
 
-            // If prediction is higher, buy 1 unit. Otherwise, short 1 unit
             foreach (StockHistory stockHistory in testData.AllStockHistories)
             {
                 double startV = stockHistory.Closes[today];
-                double predictedEndV = Predictor.PredictValue(stockHistory, today, daysToPredict);
                 double actualEndV = stockHistory.Closes[today + daysToPredict];
 
-                if (predictedEndV > startV)
-                    profit += (actualEndV - startV);
-                else
-                    profit += (startV - actualEndV);
+                profit += (actualEndV - startV);
             }
 
-            return profit / 475;
+            return profit / testData.AllStockHistories.Count;
         }
     }
 }
+

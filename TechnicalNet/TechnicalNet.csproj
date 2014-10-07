@@ -59,8 +59,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RealData\StockHistory.cs" />
     <Compile Include="Scheme\AbstractScheme.cs" />
+    <Compile Include="Scheme\BuyEverythingScheme.cs" />
+    <Compile Include="Scheme\Buy10RandomScheme.cs" />
     <Compile Include="Scheme\BuyTenBestScheme.cs" />
-    <Compile Include="Scheme\LongOneOrShortOneStrategy.cs" />
+    <Compile Include="Scheme\LongGoodShortBadScheme.cs" />
     <Compile Include="Predictors\AbstractPredictor.cs" />
     <Compile Include="Predictors\RandomPredictor.cs" />
     <Compile Include="Predictors\EverythingWillHalfPredictor.cs" />

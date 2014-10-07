@@ -39,15 +39,19 @@ namespace TechNet
             m_ShareNum = 200;
 
             AddFunctors();
-            AddStrategies();
+            AddSchemes();
             UpdateImage();
         }
 
-        private void AddStrategies()
+        List<Label> m_ValLabels = new List<Label>();
+
+        private void AddSchemes()
         {
             List<AbstractScheme> schemes = new List<AbstractScheme>();
             schemes.Add(new BuyTenBestScheme());
-            schemes.Add(new LongOneOrShortOneScheme());
+            schemes.Add(new LongGoodShortBadScheme());
+            schemes.Add(new Buy10RandomScheme());
+            schemes.Add(new BuyEverythingScheme());
 
             List<AbstractPredictor> predictors = new List<AbstractPredictor>();
             predictors.Add(new ThingsDontChangePredictor());
@@ -56,37 +60,87 @@ namespace TechNet
             predictors.Add(new LogSlopePredictor());
             predictors.Add(new EverythingWillDoublePredictor());
             predictors.Add(new EverythingWillHalfPredictor());
+            predictors.Add(new RandomPredictor());
 
+
+            // Build columns
+
+            ColumnDefinition predictorNamesColumn = new ColumnDefinition();
+            predictorNamesColumn.Width = new GridLength(170);
+            OutcomeGrid.ColumnDefinitions.Add(predictorNamesColumn);
+            for (int i = 0; i < schemes.Count; i++)
+            {
+                ColumnDefinition colDefinition = new ColumnDefinition();
+                colDefinition.Width = new GridLength(120);
+                OutcomeGrid.ColumnDefinitions.Add(colDefinition);
+            }
+
+
+            // Build rows
+
+            RowDefinition schemeNamesRow = new RowDefinition();
+            OutcomeGrid.RowDefinitions.Add(schemeNamesRow);
+            for (int i = 0; i < predictors.Count; i++)
+                OutcomeGrid.RowDefinitions.Add(new RowDefinition());
+
+
+            // Add scheme names to top row
+
+            int colNum = 0;
             foreach (AbstractScheme scheme in schemes)
             {
-                StackPanel schemePanel = new StackPanel();
-                schemePanel.Orientation = Orientation.Vertical;
-                PredictorPanel.Children.Add(schemePanel);
+                colNum++;
 
                 Label schemeNameLabel = new Label();
+                schemeNameLabel.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
                 schemeNameLabel.Content = scheme.Name;
-                schemeNameLabel.Width = 120;
-                schemeNameLabel.FontSize = 14;
-                schemePanel.Children.Add(schemeNameLabel);
 
-                foreach (AbstractPredictor Predictor in predictors)
-                {
-                    StackPanel panel = new StackPanel();
-                    panel.Orientation = Orientation.Horizontal;
-                    schemePanel.Children.Add(panel);
-
-                    Label nameLabel = new Label();
-                    nameLabel.Content = Predictor.Name;
-                    nameLabel.Width = 120;
-
-                    Label valLabel = new Label();
-                    valLabel.Content = scheme.GetSchemeProfit(m_Data, Predictor, 150, 50).ToString("$0.00");
-                    valLabel.Tag = Predictor;
-
-                    panel.Children.Add(nameLabel);
-                    panel.Children.Add(valLabel);
-                }
+                OutcomeGrid.Children.Add(schemeNameLabel);
+                Grid.SetRow(schemeNameLabel, 0);
+                Grid.SetColumn(schemeNameLabel, colNum);
             }
+
+
+            // Add strategy names to first column
+
+            int rowNum = 0;
+            foreach (AbstractPredictor predictor in predictors)
+            {
+                rowNum++;
+
+                Label predictorNameLabel = new Label();
+                predictorNameLabel.Content = predictor.Name;
+                predictorNameLabel.Width = 120;
+
+                OutcomeGrid.Children.Add(predictorNameLabel);
+                Grid.SetRow(predictorNameLabel, rowNum);
+                Grid.SetColumn(predictorNameLabel, 0);
+            }
+
+
+            //Add value labels
+
+            colNum = 1;
+            foreach (AbstractScheme scheme in schemes)
+            {
+                rowNum = 1;
+                foreach (AbstractPredictor predictor in predictors)
+                {
+                    Label valLabel = new Label();
+                    valLabel.Tag = new Func<double>(() => scheme.GetSchemeProfit(m_Data, predictor, 150, 50));
+                    valLabel.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
+                    m_ValLabels.Add(valLabel);
+                    OutcomeGrid.Children.Add(valLabel);
+                    Grid.SetRow(valLabel, rowNum);
+                    Grid.SetColumn(valLabel, colNum);
+                    rowNum++;
+                }
+                colNum++;
+            }
+
+
+
+            ButtonFindProfits_Click(this, null);
         }
 
         List<Label> m_FunctorLabels;
@@ -189,7 +243,12 @@ namespace TechNet
 
         private void ButtonFindProfits_Click(object sender, RoutedEventArgs e)
         {
-
+            foreach(Label l in m_ValLabels)
+            {
+                Func<double> func = (Func<double>)(l.Tag);
+                double val = func();
+                l.Content = val.ToString("$0.00");
+            }
         }
     }
 }

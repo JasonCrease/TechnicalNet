@@ -8,18 +8,20 @@ using TechnicalNet.Predictor;
 
 namespace TechnicalNet.Scheme
 {
-    public class BuyTenBestScheme : AbstractScheme
+    public class Buy10RandomScheme : AbstractScheme
     {
-        public override string Name { get { return "Buy10Best"; } }
+        public override string Name { get { return "Buy10Random"; } }
+
+        Random random = new Random();
 
         public override double GetSchemeProfit(StockHistorySet testData, AbstractPredictor Predictor, int today, int daysToPredict)
         {
-            var stocksInOrder = testData.AllStockHistories.OrderByDescending(x => Predictor.PredictValue(x, today, daysToPredict) / x.Closes[today]).ToArray();
-            var tenBest = stocksInOrder.Take(10).ToArray();
+            var stocksInOrder = testData.AllStockHistories.OrderByDescending(x => random.NextDouble()).ToArray();
+            var tenRandom = stocksInOrder.Take(10).ToArray();
 
             double profit = 0D;
 
-            foreach (StockHistory stockHistory in tenBest)
+            foreach (StockHistory stockHistory in tenRandom)
             {
                 double startV = stockHistory.Closes[today];
                 double actualEndV = stockHistory.Closes[today + daysToPredict];
@@ -31,3 +33,4 @@ namespace TechnicalNet.Scheme
         }
     }
 }
+
