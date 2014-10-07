@@ -4,11 +4,11 @@
         Title="Tech Net" Width="1100" Height="690" >
     <Grid>
         <TabControl>
-            <TabItem Header="Strategy Comparer">
+            <TabItem Header="Predictor Comparer">
 
                 <StackPanel Orientation="Vertical" >
                     <Button Name="ButtonFindProfits" Content="Find Profits" Margin ="10,10,10,10" Width="200" Click="ButtonFindProfits_Click"/>
-                    <StackPanel Name="StrategyPanel" Orientation="Vertical">
+                    <StackPanel Name="PredictorPanel" Orientation="Horizontal">
                     </StackPanel>
                 </StackPanel>
             </TabItem>

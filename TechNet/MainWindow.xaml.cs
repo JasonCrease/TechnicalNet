@@ -15,10 +15,11 @@ using System.Windows.Shapes;
 using System.Drawing;
 using TechnicalNet;
 using TechnicalNet.Metrics;
-using TechnicalNet.Predictors;
+using TechnicalNet.Functors;
 using System.Runtime.InteropServices;
-using TechnicalNet.Strategy;
+using TechnicalNet.Predictor;
 using TechnicalNet.RealData;
+using TechnicalNet.Scheme;
 
 namespace TechNet
 {
@@ -37,58 +38,70 @@ namespace TechNet
             m_Data = new Sp500History();
             m_ShareNum = 200;
 
-            AddPredictors();
+            AddFunctors();
             AddStrategies();
             UpdateImage();
         }
 
-        List<Label> m_StrategyLabels;
-
         private void AddStrategies()
         {
-            m_StrategyLabels = new List<Label>();
+            List<AbstractScheme> schemes = new List<AbstractScheme>();
+            schemes.Add(new BuyTenBestScheme());
+            schemes.Add(new LongOneOrShortOneScheme());
 
-            List<AbstractStrategy> strategies = new List<AbstractStrategy>();
-            strategies.Add(new ThingsDontChangeStrategy());
-            strategies.Add(new OracleStrategy());
-            strategies.Add(new LinearSlopeStrategy());
-            strategies.Add(new LogSlopeStrategy());
-            strategies.Add(new EverythingWillDoubleStrategy());
-            strategies.Add(new EverythingWillHalfStrategy());
+            List<AbstractPredictor> strategies = new List<AbstractPredictor>();
+            strategies.Add(new ThingsDontChangePredictor());
+            strategies.Add(new OraclePredictor());
+            strategies.Add(new LinearSlopePredictor());
+            strategies.Add(new LogSlopePredictor());
+            strategies.Add(new EverythingWillDoublePredictor());
+            strategies.Add(new EverythingWillHalfPredictor());
 
-            foreach (AbstractStrategy s in strategies)
+            foreach (AbstractScheme scheme in schemes)
             {
-                StackPanel panel = new StackPanel();
-                panel.Orientation = Orientation.Horizontal;
-                StrategyPanel.Children.Add(panel);
+                StackPanel schemePanel = new StackPanel();
+                schemePanel.Orientation = Orientation.Vertical;
+                PredictorPanel.Children.Add(schemePanel);
 
-                Label nameLabel = new Label();
-                nameLabel.Content = s.Name;
-                nameLabel.Width = 120;
+                Label schemeNameLabel = new Label();
+                schemeNameLabel.Content = scheme.Name;
+                schemeNameLabel.Width = 120;
+                schemeNameLabel.FontSize = 14;
+                schemePanel.Children.Add(schemeNameLabel);
 
-                Label valLabel = new Label();
-                valLabel.Content = s.GetStrategyProfit(m_Data, 150, 50).ToString("$0.00");
-                valLabel.Tag = s;
-                m_StrategyLabels.Add(valLabel);
+                foreach (AbstractPredictor Predictor in strategies)
+                {
+                    StackPanel panel = new StackPanel();
+                    panel.Orientation = Orientation.Horizontal;
+                    schemePanel.Children.Add(panel);
 
-                panel.Children.Add(nameLabel);
-                panel.Children.Add(valLabel);
+                    Label nameLabel = new Label();
+                    nameLabel.Content = Predictor.Name;
+                    nameLabel.Width = 120;
+
+                    Label valLabel = new Label();
+                    valLabel.Content = scheme.GetSchemeProfit(m_Data, Predictor, 150, 50).ToString("$0.00");
+                    valLabel.Tag = Predictor;
+
+                    panel.Children.Add(nameLabel);
+                    panel.Children.Add(valLabel);
+                }
             }
         }
 
-        List<Label> m_PredictorLabels;
+        List<Label> m_FunctorLabels;
 
-        private void AddPredictors()
+        private void AddFunctors()
         {
-            m_PredictorLabels = new List<Label>();
+            m_FunctorLabels = new List<Label>();
 
-            List<IPredictor> predictors = new List<IPredictor>();
-            predictors.Add(new EmaPredictor());
-            predictors.Add(new TenDaysTangentPredictor());
-            predictors.Add(new HundredDaysTangentPredictor());
-            predictors.Add(new EmaPredictor());
+            List<IFunctor> Functors = new List<IFunctor>();
+            Functors.Add(new EmaFunctor());
+            Functors.Add(new TenDaysTangentFunctor());
+            Functors.Add(new HundredDaysTangentFunctor());
+            Functors.Add(new EmaFunctor());
 
-            foreach (IPredictor p in predictors)
+            foreach (IFunctor p in Functors)
             {
                 StackPanel panel = new StackPanel();
                 panel.Orientation = Orientation.Horizontal;
@@ -101,7 +114,7 @@ namespace TechNet
                 Label valLabel = new Label();
                 valLabel.Content = p.Val;
                 valLabel.Tag = p;
-                m_PredictorLabels.Add(valLabel);
+                m_FunctorLabels.Add(valLabel);
 
                 panel.Children.Add(nameLabel);
                 panel.Children.Add(valLabel);
@@ -121,17 +134,17 @@ namespace TechNet
             BollingerBandsMetric bollingerBandsMetric = new BollingerBandsMetric(data);
             metrics.Add(bollingerBandsMetric);
 
-            foreach (Label label in m_PredictorLabels)
+            foreach (Label label in m_FunctorLabels)
             {
-                IPredictor pred = (IPredictor)label.Tag;
+                IFunctor pred = (IFunctor)label.Tag;
                 pred.Analyse(data);
                 label.Content = pred.Val.ToString("0.000");
             }
 
             Graph g = new Graph(data, metrics);
 
-            AbstractStrategy strategy = new ThingsDontChangeStrategy();
-            double val = strategy.PredictValue(data, 150, 50);
+            AbstractPredictor Predictor = new ThingsDontChangePredictor();
+            double val = Predictor.PredictValue(data, 150, 50);
             g.DrawPredictionPoint(val, 150 + 50);
 
             img.Source = ToBitmapSource(g.Bitmap);

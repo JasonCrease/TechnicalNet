@@ -51,20 +51,24 @@
     <Compile Include="Neural\BackPropNeuralNet.cs" />
     <Compile Include="Neural\Helpers.cs" />
     <Compile Include="Neural\Neural.cs" />
-    <Compile Include="Predictors\AdxPredictor.cs" />
-    <Compile Include="Predictors\DummyPredictor.cs" />
-    <Compile Include="Predictors\IPredictor.cs" />
-    <Compile Include="Predictors\EmaPredictor.cs" />
-    <Compile Include="Predictors\MomentumPredictor.cs" />
+    <Compile Include="Functors\AdxFunctor.cs" />
+    <Compile Include="Functors\DummyFunctor.cs" />
+    <Compile Include="Functors\IFunctor.cs" />
+    <Compile Include="Functors\EmaFunctor.cs" />
+    <Compile Include="Functors\MomentumFunctor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RealData\StockHistory.cs" />
-    <Compile Include="Strategy\AbstractStrategy.cs" />
-    <Compile Include="Strategy\EverythingWillHalfStrategy.cs" />
-    <Compile Include="Strategy\EverythingWillDoubleStrategy.cs" />
-    <Compile Include="Strategy\LogSlopeStrategy.cs" />
-    <Compile Include="Strategy\LinearSlopeStrategy.cs" />
-    <Compile Include="Strategy\OracleStrategy.cs" />
-    <Compile Include="Strategy\ThingsDontChangeStrategy.cs" />
+    <Compile Include="Scheme\AbstractScheme.cs" />
+    <Compile Include="Scheme\BuyTenBestScheme.cs" />
+    <Compile Include="Scheme\LongOneOrShortOneStrategy.cs" />
+    <Compile Include="Predictors\AbstractPredictor.cs" />
+    <Compile Include="Predictors\RandomPredictor.cs" />
+    <Compile Include="Predictors\EverythingWillHalfPredictor.cs" />
+    <Compile Include="Predictors\EverythingWillDoublePredictor.cs" />
+    <Compile Include="Predictors\LogSlopePredictor.cs" />
+    <Compile Include="Predictors\LinearSlopePredictor.cs" />
+    <Compile Include="Predictors\OraclePredictor.cs" />
+    <Compile Include="Predictors\ThingsDontChangePredictor.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

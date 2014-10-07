@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-namespace TechnicalNet.Predictors
+namespace TechnicalNet.Functors
 {
-    public class DummyPredictor : IPredictor
+    public class DummyFunctor : IFunctor
     {
         public string Name { get { return "Dummy"; } }
         public double Val { get; private set; }

@@ -4,20 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TechnicalNet.Strategy
+namespace TechnicalNet.Predictor
 {
-    public class EverythingWillDoubleStrategy : AbstractStrategy
+    // Just return today's value
+    public class ThingsDontChangePredictor : AbstractPredictor
     {
         public override string Name
         {
-            get { return "Everything doubles"; }
+            get { return "Things don't change"; }
         }
 
         public override double PredictValue(TechnicalNet.RealData.StockHistory stockHistory, int today, int daysInFuture)
         {
-            double todayClose = stockHistory.Closes[today];
-
-            return todayClose * 2;
+            return stockHistory.Closes[today];
         }
     }
 }

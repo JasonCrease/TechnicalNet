@@ -4,24 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TechnicalNet.Strategy
+namespace TechnicalNet.Predictor
 {
-    public class LinearSlopeStrategy : AbstractStrategy
+    public class EverythingWillDoublePredictor : AbstractPredictor
     {
         public override string Name
         {
-            get { return "Linear slope"; }
+            get { return "Everything doubles"; }
         }
 
         public override double PredictValue(TechnicalNet.RealData.StockHistory stockHistory, int today, int daysInFuture)
         {
-            int N = Math.Min(40, today - 1);
-
             double todayClose = stockHistory.Closes[today];
-            double fromAgoClose = stockHistory.Closes[today - N];
-            double slope = (todayClose - fromAgoClose) / (double)N;
 
-            return todayClose + (slope * (double)daysInFuture);
+            return todayClose * 2;
         }
     }
 }

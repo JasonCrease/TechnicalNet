@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TechnicalNet.Strategy
+namespace TechnicalNet.Predictor
 {
-    // A cheaty oracle strategy. Just return the value in 
-    public class OracleStrategy : AbstractStrategy
+    // A cheaty oracle Predictor. Just return the value in 
+    public class OraclePredictor : AbstractPredictor
     {
         public override string Name
         {

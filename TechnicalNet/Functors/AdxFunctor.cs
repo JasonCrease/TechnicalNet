@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-namespace TechnicalNet.Predictors
+namespace TechnicalNet.Functors
 {
     // http://en.wikipedia.org/wiki/Average_directional_movement_index
-    public class AdxPredictor : IPredictor
+    public class AdxFunctor : IFunctor
     {
         public string Name { get { return "ADX"; } }
         public double Val { get; private set; }

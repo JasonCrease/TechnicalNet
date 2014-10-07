@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TechnicalNet.Predictors
+namespace TechnicalNet.Functors
 {
-    public interface IPredictor
+    public interface IFunctor
     {
         double Val { get; }
         void Analyse(TechnicalNet.RealData.StockHistory data);

@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-namespace TechnicalNet.Predictors
+namespace TechnicalNet.Functors
 {
     /// <summary>
     /// Exponential-moving average crossover.
     /// </summary>
-    public class EmaPredictor : IPredictor
+    public class EmaFunctor : IFunctor
     {
         public string Name { get { return "EMA crossover"; } }
         public double Val { get; set; }

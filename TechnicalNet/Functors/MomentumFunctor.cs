@@ -4,21 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TechnicalNet.Predictors
+namespace TechnicalNet.Functors
 {
-    public class TenDaysTangentPredictor : TangentPredictor
+    public class TenDaysTangentFunctor : TangentFunctor
     {
         public override string Name { get { return "10 day tangent"; } }
         protected override int N { get { return 10; } }
     }
-    public class HundredDaysTangentPredictor : TangentPredictor
+    public class HundredDaysTangentFunctor : TangentFunctor
     {
         public override string Name { get { return "100 day tangent"; } }
         protected override int N { get { return 100; } }
     }
 
     // This just draw a straight line and gets the tangent.
-    public abstract class TangentPredictor : IPredictor
+    public abstract class TangentFunctor : IFunctor
     {
         public abstract string Name { get; }
         protected abstract int N { get; }
