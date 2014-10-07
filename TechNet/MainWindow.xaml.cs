@@ -49,13 +49,13 @@ namespace TechNet
             schemes.Add(new BuyTenBestScheme());
             schemes.Add(new LongOneOrShortOneScheme());
 
-            List<AbstractPredictor> strategies = new List<AbstractPredictor>();
-            strategies.Add(new ThingsDontChangePredictor());
-            strategies.Add(new OraclePredictor());
-            strategies.Add(new LinearSlopePredictor());
-            strategies.Add(new LogSlopePredictor());
-            strategies.Add(new EverythingWillDoublePredictor());
-            strategies.Add(new EverythingWillHalfPredictor());
+            List<AbstractPredictor> predictors = new List<AbstractPredictor>();
+            predictors.Add(new ThingsDontChangePredictor());
+            predictors.Add(new OraclePredictor());
+            predictors.Add(new LinearSlopePredictor());
+            predictors.Add(new LogSlopePredictor());
+            predictors.Add(new EverythingWillDoublePredictor());
+            predictors.Add(new EverythingWillHalfPredictor());
 
             foreach (AbstractScheme scheme in schemes)
             {
@@ -69,7 +69,7 @@ namespace TechNet
                 schemeNameLabel.FontSize = 14;
                 schemePanel.Children.Add(schemeNameLabel);
 
-                foreach (AbstractPredictor Predictor in strategies)
+                foreach (AbstractPredictor Predictor in predictors)
                 {
                     StackPanel panel = new StackPanel();
                     panel.Orientation = Orientation.Horizontal;
@@ -95,13 +95,13 @@ namespace TechNet
         {
             m_FunctorLabels = new List<Label>();
 
-            List<IFunctor> Functors = new List<IFunctor>();
-            Functors.Add(new EmaFunctor());
-            Functors.Add(new TenDaysTangentFunctor());
-            Functors.Add(new HundredDaysTangentFunctor());
-            Functors.Add(new EmaFunctor());
+            List<IFunctor> functors = new List<IFunctor>();
+            functors.Add(new EmaFunctor());
+            functors.Add(new TenDaysTangentFunctor());
+            functors.Add(new HundredDaysTangentFunctor());
+            functors.Add(new EmaFunctor());
 
-            foreach (IFunctor p in Functors)
+            foreach (IFunctor p in functors)
             {
                 StackPanel panel = new StackPanel();
                 panel.Orientation = Orientation.Horizontal;
