@@ -23,6 +23,11 @@ namespace TechnicalNet.Scheme
                 double predictedEndV = Predictor.PredictValue(stockHistory, today, daysToPredict);
                 double actualEndV = stockHistory.Closes[today + daysToPredict];
 
+                if (Predictor is RandomPredictor)
+                {
+                    ; ;
+                }
+
                 if (predictedEndV > startV)
                     profit += (actualEndV - startV);
                 else

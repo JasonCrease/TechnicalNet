@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TechnicalNet
 {
-    public class Neural
+    public class OldNeural
     {
         private BackPropNeuralNet m_Bnn;
         private Random rnd = new Random();

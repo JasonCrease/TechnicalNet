@@ -127,7 +127,7 @@ namespace TechNet
                 foreach (AbstractPredictor predictor in predictors)
                 {
                     Label valLabel = new Label();
-                    valLabel.Tag = new Func<double>(() => scheme.GetSchemeProfit(m_Data, predictor, 150, 50));
+                    valLabel.Tag = new Func<double>(() => scheme.GetSchemeProfit(m_Data, predictor, 100, 50));
                     valLabel.HorizontalAlignment = System.Windows.HorizontalAlignment.Right;
                     m_ValLabels.Add(valLabel);
                     OutcomeGrid.Children.Add(valLabel);

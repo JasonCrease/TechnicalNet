@@ -15,8 +15,8 @@ namespace TechnicalNet.Predictor
 
         public override double PredictValue(RealData.StockHistory stockHistory, int today, int daysInFuture)
         {
-            double change = -Math.Log(random.NextDouble()) * Math.E;
-            return stockHistory.Closes[today] * Math.Exp(change);
+            double change = -Math.Log(random.NextDouble());
+            return stockHistory.Closes[today] * change;
         }
 
         public override string Name
