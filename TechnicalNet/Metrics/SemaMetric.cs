@@ -10,8 +10,6 @@ namespace TechnicalNet.Metrics
 {
     public class SemaMetric : XemaMetric
     {
-        private StockHistory data;
-
         public SemaMetric(StockHistory data) : base(data)
         {
             m_Color = Color.SeaGreen;
