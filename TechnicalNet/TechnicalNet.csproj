@@ -56,7 +56,7 @@
     <Compile Include="Functors\DummyFunctor.cs" />
     <Compile Include="Functors\IFunctor.cs" />
     <Compile Include="Functors\EmaFunctor.cs" />
-    <Compile Include="Functors\MomentumFunctor.cs" />
+    <Compile Include="Functors\TangentFunctor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RealData\StockHistory.cs" />
     <Compile Include="Scheme\AbstractScheme.cs" />
