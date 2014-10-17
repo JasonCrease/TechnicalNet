@@ -18,7 +18,7 @@ namespace TechnicalNet.Predictors
             DebugWrite = debugWrite;
         }
 
-         public void Setup()
+        public void Setup()
         {
             int numInput = 7;
             int numHidden = 6;
