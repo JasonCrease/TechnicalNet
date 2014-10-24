@@ -12,7 +12,7 @@ namespace TechnicalNet.Functors
         public string Name { get { return "Dummy"; } }
         public double Val { get; private set; }
 
-        public void Analyse(TechnicalNet.RealData.StockHistory stock)
+        public void Analyse(TechnicalNet.RealData.StockHistory stock, int today)
         {
             throw new NotImplementedException();
         }

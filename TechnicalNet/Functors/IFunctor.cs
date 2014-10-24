@@ -9,7 +9,7 @@ namespace TechnicalNet.Functors
     public interface IFunctor
     {
         double Val { get; }
-        void Analyse(TechnicalNet.RealData.StockHistory data);
+        void Analyse(TechnicalNet.RealData.StockHistory data, int today);
         string Name { get; }
     }
 }

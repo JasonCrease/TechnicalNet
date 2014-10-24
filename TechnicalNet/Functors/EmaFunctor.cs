@@ -17,7 +17,7 @@ namespace TechnicalNet.Functors
         private double Rate1 = 0.8D;
         private double Rate2 = 0.98D;
 
-        public void Analyse(TechnicalNet.RealData.StockHistory stock)
+        public void Analyse(TechnicalNet.RealData.StockHistory stock, int today)
         {
             double[] data1 = new double[stock.Count];
             data1[0] = stock.Closes[0];
@@ -31,7 +31,7 @@ namespace TechnicalNet.Functors
 
             Val = 0D;
 
-            for (int i = 1; i < 150; i++)
+            for (int i = 1; i < today; i++)
             {
                 if ((data1[i - 1] < data2[i - 1]) && (data1[i] > data2[i]))
                     Val = -1D;

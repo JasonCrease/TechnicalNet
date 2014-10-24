@@ -28,12 +28,11 @@ namespace TechnicalNet.Functors
             private set;
         }
 
-        public void Analyse(TechnicalNet.RealData.StockHistory data)
+        public void Analyse(TechnicalNet.RealData.StockHistory data, int today)
         {
-            int lastDay = 150;
-            double finalClose = data.Closes[lastDay];
-            double fromAgoClose = data.Closes[lastDay - N];
-            double ratio = (((finalClose - fromAgoClose) * 100) / fromAgoClose) / N;
+            double finalClose = data.Closes[today];
+            double fromAgoClose = data.Closes[today - N];
+            double ratio = ((((finalClose - fromAgoClose)) / fromAgoClose) / N) * 100;
 
             Val = Math.Tanh(ratio);
         }

@@ -43,6 +43,7 @@
     <Compile Include="Graph.cs" />
     <Compile Include="Neural\OldNeural.cs" />
     <Compile Include="Predictors\NeuralPredictor.cs" />
+    <Compile Include="RealData\SpnShareHistory.cs" />
     <Compile Include="RealData\StockHistorySet.cs" />
     <Compile Include="RealData\Datum.cs" />
     <Compile Include="RealData\Sp500History.cs" />

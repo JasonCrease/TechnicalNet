@@ -20,9 +20,9 @@ namespace TechnicalNet.RealData
         public int Count;
         public string Name { get; private set; }
 
-        public double Profit
+        public double Profit(int today, int start)
         {
-            get { return (Closes[240] - Closes[150]) / Closes[150]; }
+            return (Closes[today] - Closes[start]) / Closes[start]; 
         }
 
         public StockHistory()

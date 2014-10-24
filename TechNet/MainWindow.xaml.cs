@@ -203,7 +203,7 @@ namespace TechNet
 
             img.Source = ToBitmapSource(g.Bitmap);
             LabelShareName.Content = data.Name;
-            LabelProfit.Content = data.Profit.ToString("0.00%");
+            LabelProfit.Content = data.Profit(240, 150).ToString("0.00%");
         }
 
         private void ButtonNextShare_Click(object sender, RoutedEventArgs e)
